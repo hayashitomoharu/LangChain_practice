@@ -9,6 +9,8 @@ readme = "README.md"
 python = "^3.10"
 python-dotenv = "^1.0.0"
 langchain = "^0.0.324"
+numexpr = "^2.8.7"
+langchain-experimental = "^0.0.35"
 
 
 [tool.poetry.group.dev.dependencies]
