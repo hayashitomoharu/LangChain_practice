@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "langchain-practice"
+version = "0.1.0"
+description = ""
+authors = ["hayashitomoharu <146327155+hayashitomoharu@users.noreply.github.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+python-dotenv = "^1.0.0"
+langchain = "^0.0.324"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.10.1"
+pyright = "^1.1.333"
+ruff = "^0.1.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
