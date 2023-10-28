@@ -1,7 +1,6 @@
 import os
 from dotenv import load_dotenv
-from langchain.agents import load_tools
-from langchain.agents import initialize_agent
+from langchain.agents import load_tools, initialize_agent
 from langchain.llms import OpenAI
 
 from langchain.memory import ConversationBufferMemory
@@ -13,7 +12,7 @@ temp = os.getenv("temperature")
 
 # llmとagent定義
 
-
+# TODO:refactor (Tehre can define in one function)
 llm = OpenAI(temperature=temp)
 tools = load_tools(["llm-math", "python_repl"], llm=llm)
 agent = initialize_agent(tools, llm, AgentType="zero-shot-react-description")
@@ -26,6 +25,7 @@ memory = ConversationBufferMemory(
 
 # 会話を開始
 
+# TODO: feat (Need other way that can break loop (timeout, something looplimit, etc..))
 while True:
     user_input = input("You: ")
     memory.chat_memory.add_user_message(user_input)
