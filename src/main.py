@@ -16,7 +16,7 @@ temp = os.getenv("temperature")
 
 llm = OpenAI(temperature=temp)
 tools = load_tools(["llm-math", "python_repl"], llm=llm)
-agent = initialize_agent(tools, llm, AgentType ="zero-shot-react-description")
+agent = initialize_agent(tools, llm, AgentType="zero-shot-react-description")
 
 
 memory = ConversationBufferMemory(
