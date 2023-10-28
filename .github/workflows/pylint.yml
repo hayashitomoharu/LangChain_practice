@@ -1,31 +1,36 @@
-name: Pylint
-
-on: [push]
-
+name: Python Lint
+on:
+  pull_request:
+    paths:
+      - "**.py"
+env:
+  PYTHON_VERSION: "3.10"
+  POETRY_VERSION: 1.4.2
 jobs:
-  build:
+  python-lint:
+    timeout-minutes: 10
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: ["3.8", "3.9", "3.10"]
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v3
-      with:
-        python-version: ${{ matrix.python-version }}
-    - name: Install Poetry
-      run: |
-          curl -sSL https://install.python-poetry.org | python3 -
-
-    - name: Install dependencies using Poetry
-      run: |
-          poetry install
-    - name: Lint Python code
-      run: |
-        FILES=$(git ls-files '*.py')
-        if [[ ! -z "$FILES" ]]; then
-          pylint $FILES
-        else
-          echo "No Python files to lint"
-        fi
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - name: Run image
+        uses: abatilo/actions-poetry@v2
+        with:
+          poetry-version: ${{ env.POETRY_VERSION }}
+      - name: Install dependencies
+        run: poetry install
+      - name: Create temporary Pyright Configuration
+        run: |
+          echo '{ "exclude": [ "src/core/config.py" ] }' > pyrightconfig.json
+      - name: Run pyright
+        run: poetry run pyright
+      - name: Run black
+        run: poetry run black --check .
+      - name: Run ruff
+        run: poetry run ruff check .
+      - name: Remove temporary Pyright Configuration
+        run: rm pyrightconfig.json
