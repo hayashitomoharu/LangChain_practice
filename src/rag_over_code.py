@@ -9,7 +9,12 @@ from langchain.chat_models import ChatOpenAI
 from langchain.memory import ConversationSummaryMemory
 from langchain.chains import ConversationalRetrievalChain
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from pinecone_client.vector_db import (index, create_index_or_pass, upsert_vector_from_documents, embeddings)
+from pinecone_client.vector_db import (
+    index,
+    create_index_or_pass,
+    upsert_vector_from_documents,
+    embeddings,
+)
 from langchain.vectorstores import Pinecone
 
 # git_clone or 存在確認
@@ -69,7 +74,7 @@ create_index_or_pass()
 # ベクトル化とベクターDBに保存
 upsert_vector_from_documents(documents)
 
-# retriever定義　
+# retriever定義
 vectorstore = Pinecone(index, embeddings.embed_query, "testname")
 retriever = vectorstore.as_retriever(search_type="mmr", serch_kwargs={"k": 1})
 
