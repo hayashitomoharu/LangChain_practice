@@ -11,6 +11,9 @@ python-dotenv = "^1.0.0"
 langchain = "^0.0.324"
 numexpr = "^2.8.7"
 langchain-experimental = "^0.0.35"
+gitpython = "^3.1.40"
+chromadb = "^0.4.15"
+pinecone-client = {extras = ["grpc"], version = "^2.2.4"}
 
 
 [tool.poetry.group.dev.dependencies]
